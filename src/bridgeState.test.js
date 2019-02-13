@@ -18,6 +18,17 @@ ContractsEventsSubscription.__setEventBatches([
         amount: '100',
       },
     },
+    { // Cryptonian - Test code for 'NewDepositState'
+      event: 'NewDepositState',
+      returnValues: {
+        depositId: '0',
+        depositor: '0xB8205608d54cb81f44F263bE086027D8610F3C94',
+        color: '32900',
+        tokenId: '1',
+        target: '0',
+        state: '0'
+      },
+    },
     {
       event: 'ExitStarted',
       returnValues: {

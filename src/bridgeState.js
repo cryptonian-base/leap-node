@@ -53,6 +53,10 @@ module.exports = class BridgeState {
     this.epochLengths = [];
     this.minGasPrices = [];
 
+    //Cryptonian 
+    this.depositStates ={};
+    
+
     this.onNewBlock = this.onNewBlock.bind(this);
     this.eventsBuffer = new TinyQueue([], (a, b) => {
       if (a.blockNumber === b.blockNumber) {
@@ -124,6 +128,16 @@ module.exports = class BridgeState {
           depositor: event.depositor,
           color: event.color,
           amount: event.amount,
+        };
+      },
+      // Cryptonian - when NST (Non-Fungible Storage Token) is deposited on the mainnnet..
+      NewDepositState: ({returnValues: event}) => {
+        this.depositStates[event.depositId] = {
+          depositor: event.depositor,
+          color: event.color,
+          tokenId: event.tokenId,
+          target: event.target,
+          state: event.state,
         };
       },
       ExitStarted: ({ returnValues: event }) => {

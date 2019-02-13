@@ -75,6 +75,17 @@ const checkOutpoints = (state, tx) => {
     }
   });
 };
+const executeSC = ({balances, owners, unspent}, tx) => {
+  // SmartContract 관련 정보 output(value:'tokenId') 와 input (msgData:'target', script:'policy') 
+  tx.outputs.forEach((out, outPos) => {
+    balances[out.color] = balances[out.color] || {};
+    owners[out.color] = owners[out.color] || {};
+    const cBalances = balances[out.color];
+    const cOwners = owners[out.color];
+
+    
+  });
+};
 
 const addOutputs = ({ balances, owners, unspent }, tx) => {
   tx.outputs.forEach((out, outPos) => {
@@ -124,3 +135,5 @@ exports.checkInsAndOuts = checkInsAndOuts;
 exports.checkOutpoints = checkOutpoints;
 exports.addOutputs = addOutputs;
 exports.removeInputs = removeInputs;
+// Cryptonian 
+exports.executeSC = executeSC;

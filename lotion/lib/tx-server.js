@@ -15,11 +15,11 @@ module.exports = ({
   const app = express();
   app.use(cors());
   app.use(json({ type: '*/*' }));
-  app.post('/txs', async (req, res) => {
+  app.post('/txs', async (req, res) => {    // Cryptonian - Deposit State를 하기 위해 코드 체크..
     // encode transaction bytes, send it to tendermint node
     const nonce = Math.floor(Math.random() * (2 << 12)); // eslint-disable-line no-bitwise
     const txBytes = `0x${encodeTx(req.body, nonce).toString('hex')}`;
-    const result = await axios.get(`${tendermintRpcUrl}/broadcast_tx_commit`, {
+    const result = await axios.get(`${tendermintRpcUrl}/broadcast_tx_commit`, { // 텐터민트 프로토콜..
       params: {
         tx: txBytes,
       },

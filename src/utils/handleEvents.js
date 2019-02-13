@@ -9,7 +9,8 @@ module.exports = handlers => {
     for (const event of events) {
       // istanbul ignore next
       if (event.event === undefined) {
-        console.warn('Unknown event. ABI can be outdated');
+        // Cryptonian - node 실행시 이 에러 발생하는 이유는.. 아마도 abi를 업데이트 안해줘서?! 싱크가 안맞아서 그런듯 - 아 써있네 -_-;
+        console.warn('Unknown event. ABI can be outdated'); 
       }
 
       if (handlers[event.event]) {

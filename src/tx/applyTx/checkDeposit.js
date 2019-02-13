@@ -24,21 +24,46 @@ module.exports = (state, tx, bridgeState) => {
       }`
     );
   }
+  
+  // Cryptonian - Deposit State를 처리할 수 있을지 확인.. (Non-Fungible Storage Token은 tokenId(=value), target, state)
+    // [Problem] 중요한 점은 NFT 를 지원하도록 작성되었기에 value(tokenId) 부분을 잘 보면 될듯.. target과 state는??
+  /* new Transaction(
+    Type.DEPOSIT, [new Input({msgData:target, script:state})], 
+                  [new Output(tokenId, address, color)], 
+                  {depositId},);
+  */
 
   if (
     !isNFT(tx.outputs[0].color) &&
     lessThan(BigInt(tx.outputs[0].value), BigInt(1))
   ) {
-    throw new Error('Deposit out has value < 1');
+    throw new Error('Deposit out has value < 1'); // ERC20 의 경우 Deposit ..
   }
-  const deposit = bridgeState.deposits[tx.options.depositId];
-  if (
-    !deposit ||
-    !equal(BigInt(deposit.amount), BigInt(tx.outputs[0].value)) ||
-    Number(deposit.color) !== tx.outputs[0].color ||
-    !addrCmp(deposit.depositor, tx.outputs[0].address)
-  ) {
-    throw new Error('Trying to submit incorrect deposit');
+
+  // Cryptonian - to deal with NFT..
+  if (isNFT(tx.outputs[0].color)) {
+    const deposit = bridgeState.depositStates[tx.options.depositId];
+    if (
+      !deposit ||
+      !equal(BigInt(deposit.tokenId), BigInt(tx.outputs[0].value)) ||
+      Number(deposit.color) !== tx.outputs[0].color ||
+      !addrCmp(deposit.depositor, tx.outputs[0].address)
+    ) {
+      throw new Error('Trying to submit incorrect deposit with states..');
+    }
+  }
+  else {
+    const deposit = bridgeState.deposits[tx.options.depositId];
+    if (
+      !deposit ||
+      !equal(BigInt(deposit.amount), BigInt(tx.outputs[0].value)) ||
+      Number(deposit.color) !== tx.outputs[0].color ||
+      !addrCmp(deposit.depositor, tx.outputs[0].address)
+    ) {
+      throw new Error('Trying to submit incorrect deposit');
+    }
   }
   state.processedDeposit += 1;
+
+
 };

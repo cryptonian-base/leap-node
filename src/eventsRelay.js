@@ -69,6 +69,22 @@ module.exports = class EventsRelay {
           sendTx(this.txServerPort, tx.hex());
         }, minDelay);
       },
+      // Cryptonian 
+      NewDepositState: async ({ returnValues: event}) => {
+        // depositId, depositor, color, tokenId, target, state
+        const color = Number(event.color);    // Cryptonian : 타입이 value 등과 같은데 color 는 왜 Number로 처리되나..
+        const tokenId = BigInt(event.tokenId);
+        const target = BigInt(event.target);
+        const state = BigInt(event.state);
+
+        // static depositState(depositId, address, color, tokenId, target, state)
+        const tx = Tx.depositState(event.depositId, event.depositor, color, tokenId, target, state);
+        setTimeout(() => {
+          sendTx(this.txServerPort, tx.hex());
+        }, minDelay);
+      },
+
+      }),
       EpochLength: async event => {
         const { epochLength } = event.returnValues;
         const tx = Tx.epochLength(Number(epochLength));
