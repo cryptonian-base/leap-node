@@ -42,6 +42,9 @@ async function run() {
   const app = lotion({
     initialState: {
       mempool: [],
+      // Cryptonian..
+      states: {},
+
       balances: {}, // stores account balances like this { [colorIndex]: { address1: 0, ... } }
       owners: {}, // index for NFT ownerOf call
       unspent: {}, // stores unspent outputs (deposits, transfers)

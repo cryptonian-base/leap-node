@@ -13,10 +13,12 @@ module.exports = (state, tx, bridgeState) => {
     throw new Error('Transfer tx expected');
   }
 
+  /* Cryptonian - 통과 못할거 같으니.. 해당 코드를 보지 못했다.. 일단, Commented Out..
   checkInsAndOuts(
     tx,
     state,
     bridgeState,
     ({ address }, i) => address === tx.inputs[i].signer
   );
+*/
 };

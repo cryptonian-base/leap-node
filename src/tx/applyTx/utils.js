@@ -5,7 +5,10 @@
  * found in the LICENSE file in the root directory of this source tree.
  */
 
-const { Outpoint, Type } = require('leap-core');
+const {
+  Outpoint,
+  Type,
+} = require('/Users/cryptonian/Developer/github.com/cryptonian-base/leap-core');
 const {
   BigInt,
   add,
@@ -75,15 +78,25 @@ const checkOutpoints = (state, tx) => {
     }
   });
 };
-const executeSC = ({balances, owners, unspent}, tx) => {
-  // SmartContract 관련 정보 output(value:'tokenId') 와 input (msgData:'target', script:'policy') 
+
+// Cryptonian - "states" 추가 : 참고로.. balances, owners, unspent는 'lotion'의 속성이었음!! - 재확인 필요!!
+const executeSC = ({ balances, owners, unspent, states }, tx) => {
+  if (tx.type != Type.SPEND_COND) return; // SPEND_COND 에서만 states를 변경한다.
+
+  // SmartContract 관련 정보 output(value:'tokenId', storageRoot:json..) 와 input (msgData:'target', script:'policy')
   tx.outputs.forEach((out, outPos) => {
+    // 여러 Color 관련 토큰을 지원할 수 있으려면.. Key-Value 매핑이 좀 달라져야겠지만 일단!.. Temp로..
+    states[out.value] = JSON.parse(out.storageRoot); // json 형태로 그냥 넣음!!
+    /* reference Code from 
     balances[out.color] = balances[out.color] || {};
     owners[out.color] = owners[out.color] || {};
     const cBalances = balances[out.color];
     const cOwners = owners[out.color];
 
-    
+    cBalances[out.address] = cBalances[out.address] || [];
+    cBalances[out.address].push(out.value);
+    cOwners[out.value] = out.address;
+    */
   });
 };
 
@@ -135,5 +148,5 @@ exports.checkInsAndOuts = checkInsAndOuts;
 exports.checkOutpoints = checkOutpoints;
 exports.addOutputs = addOutputs;
 exports.removeInputs = removeInputs;
-// Cryptonian 
+// Cryptonian
 exports.executeSC = executeSC;

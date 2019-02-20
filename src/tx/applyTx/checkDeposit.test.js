@@ -1,4 +1,6 @@
-const { Tx } = require('leap-core');
+const {
+  Tx,
+} = require('/Users/cryptonian/Developer/github.com/cryptonian-base/leap-core');
 const checkDeposit = require('./checkDeposit');
 
 const ADDR_1 = '0x4436373705394267350db2c06613990d34621d69';
@@ -10,6 +12,19 @@ const makeDepositMock = (depositor, amount, color) => {
       {},
       {
         get: () => ({ depositor, amount, color }),
+      }
+    ),
+  };
+};
+
+// Cryptonian
+
+const makeDepositStateMock = (depositor, tokenId, color, target, state) => {
+  return {
+    depositStates: new Proxy(
+      {},
+      {
+        get: () => ({ depositor, tokenId, color, target, state }),
       }
     ),
   };
@@ -44,12 +59,21 @@ describe('checkDeposit', () => {
     expect(state.processedDeposit).toBe(1);
   });
 
+  // Cryptonian. 현재 nft 는 Non-Fungible Storage Token 만 다루는 것으로 생각한다!!
   test('valid tx (nft)', () => {
     const state = getInitialState();
     const color = 2 ** 15 + 1;
     const value = '293875120984651807345';
-    const tx = Tx.deposit(1, value, ADDR_1, color);
-    checkDeposit(state, tx, makeDepositMock(ADDR_1, value, String(color)));
+
+    //static depositState(depositId, address, color, tokenId, target, state)
+    //const tx = Tx.deposit(1, value, ADDR_1, color);
+    const tx = Tx.depositState(1, ADDR_1, color, value, '123', '0x111');
+
+    checkDeposit(
+      state,
+      tx,
+      makeDepositStateMock(ADDR_1, value, String(color), '123', '0x111')
+    );
     expect(state.processedDeposit).toBe(1);
   });
 

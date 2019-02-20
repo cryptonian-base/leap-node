@@ -24,9 +24,9 @@ module.exports = (state, tx, bridgeState) => {
       }`
     );
   }
-  
+
   // Cryptonian - Deposit State를 처리할 수 있을지 확인.. (Non-Fungible Storage Token은 tokenId(=value), target, state)
-    // [Problem] 중요한 점은 NFT 를 지원하도록 작성되었기에 value(tokenId) 부분을 잘 보면 될듯.. target과 state는??
+  // [Problem] 중요한 점은 NFT 를 지원하도록 작성되었기에 value(tokenId) 부분을 잘 보면 될듯.. target과 state는??
   /* new Transaction(
     Type.DEPOSIT, [new Input({msgData:target, script:state})], 
                   [new Output(tokenId, address, color)], 
@@ -41,6 +41,7 @@ module.exports = (state, tx, bridgeState) => {
   }
 
   // Cryptonian - to deal with NFT..
+
   if (isNFT(tx.outputs[0].color)) {
     const deposit = bridgeState.depositStates[tx.options.depositId];
     if (
@@ -51,8 +52,7 @@ module.exports = (state, tx, bridgeState) => {
     ) {
       throw new Error('Trying to submit incorrect deposit with states..');
     }
-  }
-  else {
+  } else {
     const deposit = bridgeState.deposits[tx.options.depositId];
     if (
       !deposit ||
@@ -64,6 +64,4 @@ module.exports = (state, tx, bridgeState) => {
     }
   }
   state.processedDeposit += 1;
-
-
 };

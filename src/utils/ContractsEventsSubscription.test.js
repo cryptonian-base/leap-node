@@ -61,6 +61,7 @@ test('init', async () => {
     { event: 'NewDeposit' },
     { event: 'NewDeposit' },
     { event: 'NewExit' },
+    { event: 'NewDepositState' }, // Cryptonian
   ];
   const sub = new ContractsEventsSubscription(
     mockWeb3(10),

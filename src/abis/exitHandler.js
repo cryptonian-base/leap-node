@@ -202,19 +202,20 @@ module.exports = [
     name: 'Debug',
     type: 'event',
   },
-  {   // Cryptonian - manually added 'NewDepositState'
-        // [Problem] 자동화가 되어야하지 않을까?!
-    "anonymous": false,
-    "inputs": [
-      {"indexed": true,"name": "depositId","type": "uint32"},
-      {"indexed": true,"name": "depositor","type": "address"},
-      {"indexed": true,"name": "color","type": "uint256"},
-      {"indexed": false,"name": "tokenId","type": "uint256"},
-      {"indexed": false,"name": "target","type": "uint256"},
-      {"indexed": false,"name": "state","type": "uint256"}
+  {
+    // Cryptonian - manually added 'NewDepositState'
+    // [Problem] 자동화가 되어야하지 않을까?!
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: 'depositId', type: 'uint32' },
+      { indexed: true, name: 'depositor', type: 'address' },
+      { indexed: true, name: 'color', type: 'uint256' },
+      { indexed: false, name: 'tokenId', type: 'uint256' },
+      { indexed: false, name: 'target', type: 'string' },
+      { indexed: false, name: 'state', type: 'string' },
     ],
-    "name": "NewDepositState",
-    "type": "event"
+    name: 'NewDepositState',
+    type: 'event',
   },
   {
     anonymous: false,
