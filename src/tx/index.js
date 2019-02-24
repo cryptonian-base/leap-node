@@ -4,8 +4,10 @@
  * This source code is licensed under the Mozilla Public License Version 2.0
  * found in the LICENSE file in the root directory of this source tree.
  */
-
-const { Tx } = require('leap-core');
+//Cryptonian
+const {
+  Tx,
+} = require('/Users/cryptonian/Developer/github.com/cryptonian-base/leap-core');
 const applyTx = require('./applyTx');
 const accumulateTx = require('./accumulateTx');
 const printTx = require('../txHelpers/printTx');

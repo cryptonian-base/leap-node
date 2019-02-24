@@ -20,6 +20,8 @@ const {
 const { isNFT } = require('../../utils');
 const { uniq, isEqual } = require('lodash');
 
+const { logNode } = require('../../utils/debug');
+
 const groupValuesByColor = (values, { color, value }) => {
   if (!isNFT(color) && lessThan(BigInt(value), BigInt(1))) {
     throw new Error('One of the outs has value < 1');
@@ -81,11 +83,16 @@ const checkOutpoints = (state, tx) => {
 
 // Cryptonian - "states" 추가 : 참고로.. balances, owners, unspent는 'lotion'의 속성이었음!! - 재확인 필요!!
 const executeSC = ({ balances, owners, unspent, states }, tx) => {
+  //2. Commented out - DEPOSIT State 처음에는 어떻게 하나?!?!
+  //3. restore..
   if (tx.type != Type.SPEND_COND) return; // SPEND_COND 에서만 states를 변경한다.
 
   // SmartContract 관련 정보 output(value:'tokenId', storageRoot:json..) 와 input (msgData:'target', script:'policy')
   tx.outputs.forEach((out, outPos) => {
     // 여러 Color 관련 토큰을 지원할 수 있으려면.. Key-Value 매핑이 좀 달라져야겠지만 일단!.. Temp로..
+    logNode(out.value);
+    logNode(out.storageRoot);
+
     states[out.value] = JSON.parse(out.storageRoot); // json 형태로 그냥 넣음!!
     /* reference Code from 
     balances[out.color] = balances[out.color] || {};

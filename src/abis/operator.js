@@ -8,6 +8,7 @@ module.exports = [
       },
     ],
     name: 'slots',
+    /* Cryptonian
     outputs: [
       {
         name: 'eventCounter',
@@ -40,6 +41,33 @@ module.exports = [
       {
         name: 'newStake',
         type: 'uint64',
+      },
+      {
+        name: 'newSigner',
+        type: 'address',
+      },
+      {
+        name: 'newTendermint',
+        type: 'bytes32',
+      },
+    ],
+    */
+    outputs: [
+      {
+        name: 'eventCounter',
+        type: 'uint32',
+      },
+      {
+        name: 'signer',
+        type: 'address',
+      },
+      {
+        name: 'tendermint',
+        type: 'bytes32',
+      },
+      {
+        name: 'activationEpoch',
+        type: 'uint32',
       },
       {
         name: 'newSigner',

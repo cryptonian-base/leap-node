@@ -8,7 +8,12 @@
 /* eslint-disable no-await-in-loop, no-console, no-loop-func */
 
 const axios = require('axios');
-const { Output, Tx, Input, Outpoint } = require('leap-core');
+const {
+  Output,
+  Tx,
+  Input,
+  Outpoint,
+} = require('/Users/cryptonian/Developer/github.com/cryptonian-base/leap-core');
 
 const sendTx = require('../src/txHelpers/sendTx');
 

@@ -1,4 +1,9 @@
-const { Tx, Type, Util } = require('leap-core');
+// Cryptonian
+const {
+  Tx,
+  Type,
+  Util,
+} = require('/Users/cryptonian/Developer/github.com/cryptonian-base/leap-core');
 
 const txValue = (tx, prevTx) => {
   // assuming first output is transfer, second one is change

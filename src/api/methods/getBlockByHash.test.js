@@ -1,4 +1,7 @@
-const { Block, Tx } = require('leap-core');
+const {
+  Block,
+  Tx,
+} = require('/Users/cryptonian/Developer/github.com/cryptonian-base/leap-core');
 const getBlockByHash = require('./getBlockByHash');
 const txResponse = require('./txResponse');
 

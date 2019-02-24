@@ -115,6 +115,21 @@ module.exports = [
     type: 'function',
   },
   {
+    // Cryptonian
+    constant: false,
+    inputs: [
+      { name: '_owner', type: 'address' },
+      { name: 'tokenId', type: 'uint256' },
+      { name: 'stateKey', type: 'string' },
+      { name: '_color', type: 'uint16' },
+    ],
+    name: 'depositState',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     constant: true,
     inputs: [{ name: '_color', type: 'uint16' }],
     name: 'getTokenAddr',

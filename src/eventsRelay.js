@@ -18,6 +18,9 @@ const TinyQueue = require('tinyqueue');
 const sendTx = require('./txHelpers/sendTx');
 const { handleEvents } = require('./utils');
 
+// Cryptonian - to debug
+const { logNode } = require('./utils/debug');
+
 const minDelay = 2000;
 
 module.exports = class EventsRelay {
@@ -92,6 +95,7 @@ module.exports = class EventsRelay {
           target,
           state
         );
+
         setTimeout(() => {
           sendTx(this.txServerPort, tx.hex());
         }, minDelay);
